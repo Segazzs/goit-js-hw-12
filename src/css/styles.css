@@ -90,7 +90,7 @@ button:hover {
 
 .gallery-item {
   max-width: 400px;
-  min-height: 322px;
+  min-height: 200px;
   background-size: cover;
   border: 1px solid #808080;
 }

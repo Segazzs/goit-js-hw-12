@@ -12,14 +12,15 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
 const form = document.querySelector('.form');
-const btn = document.querySelector('body button');
+const btn = document.querySelector('.show-more');
+
+hideLoadMoreButton();
 
 let page = 1;
 let value = '';
 
 form.addEventListener('submit', async event => {
   event.preventDefault();
-  hideLoadMoreButton();
   clearGallery();
 
   value = event.target.elements['search-text'].value.trim();
@@ -58,9 +59,6 @@ form.addEventListener('submit', async event => {
     createGallery(images.hits);
 
     showLoadMoreButton();
-    let elem = document.querySelector('.gallery-item');
-    let rect = elem.getBoundingClientRect();
-    height = rect;
   } catch {
     iziToast.error({
       message: 'An error occurred while fetching images.',
