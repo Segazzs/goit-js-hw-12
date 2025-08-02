@@ -90,9 +90,12 @@ button:hover {
 
 .gallery-item {
   max-width: 400px;
-  min-height: 200px;
+  min-height: 322px;
   background-size: cover;
   border: 1px solid #808080;
+}
+.gallery-item img {
+  width: 100%;
 }
 
 .img_info {
@@ -161,4 +164,9 @@ button:hover {
 
 .none {
   display: none;
+}
+
+.show-more {
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
