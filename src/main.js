@@ -1,4 +1,4 @@
-import { getImagesByQuery } from './js/pixabay-api.js';
+import { getImagesByQuery, PER_PAGE } from './js/pixabay-api.js';
 import {
   createGallery,
   clearGallery,
@@ -13,8 +13,6 @@ import 'izitoast/dist/css/iziToast.min.css';
 
 const form = document.querySelector('.form');
 const btn = document.querySelector('.show-more');
-
-hideLoadMoreButton();
 
 let page = 1;
 let value = '';
@@ -32,23 +30,13 @@ form.addEventListener('submit', async event => {
     return;
   }
 
+  page = 1;
   showLoader();
-  clearGallery();
 
   try {
     const images = await getImagesByQuery(value, page);
 
-    let total = images.total;
-
-    if (images.hits.length >= total) {
-      iziToast.error({
-        message: 'Were sorry, but youve reached the end of search results',
-      });
-      hideLoadMoreButton();
-      return;
-    }
-
-    if (images.length === 0) {
+    if (images.hits.length === 0) {
       iziToast.error({
         message:
           'Sorry, there are no images matching your search query. Please try again!',
@@ -58,7 +46,14 @@ form.addEventListener('submit', async event => {
 
     createGallery(images.hits);
 
-    showLoadMoreButton();
+    if (images.totalHits > page * PER_PAGE) {
+      showLoadMoreButton();
+    } else {
+      hideLoadMoreButton();
+      iziToast.info({
+        message: 'You have reached the end of the results.',
+      });
+    }
   } catch {
     iziToast.error({
       message: 'An error occurred while fetching images.',
@@ -74,8 +69,8 @@ btn.addEventListener('click', async () => {
 
   try {
     const images = await getImagesByQuery(value, page);
-
     createGallery(images.hits);
+
     const firstCard = document.querySelector('.gallery-item');
     if (firstCard) {
       const cardHeight = firstCard.getBoundingClientRect().height;
@@ -85,7 +80,7 @@ btn.addEventListener('click', async () => {
       });
     }
 
-    if (images.totalHits <= page * 15) {
+    if (images.totalHits <= page * PER_PAGE) {
       iziToast.info({
         message: 'You have reached the end of the results.',
       });

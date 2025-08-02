@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const apiKey = '51493488-12143edce1099078d847fb8bb';
+export const PER_PAGE = 15;
 
 export async function getImagesByQuery(query, page) {
   try {
