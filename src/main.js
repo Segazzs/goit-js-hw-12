@@ -12,12 +12,10 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
 const form = document.querySelector('.form');
-const btn = document.querySelector('.show-more');
+const btn = document.querySelector('body button');
 
 let page = 1;
 let value = '';
-
-let height;
 
 form.addEventListener('submit', async event => {
   event.preventDefault();
